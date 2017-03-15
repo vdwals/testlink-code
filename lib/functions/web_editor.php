@@ -1,13 +1,13 @@
 <?php
 /**
- * TestLink Open Source Project - http://testlink.sourceforge.net/ 
+ * TestLink Open Source Project - http://testlink.sourceforge.net/
  * This script is distributed under the GNU General Public License 2 or later.
- *  
+ *
  * Support for web editor switching
- * 
+ *
  * @filesource	web_editor.php
  * @package     TestLink
- * @copyright 	2005-2012, TestLink community 
+ * @copyright 	2005-2012, TestLink community
  * @link 		    http://www.teamst.org/index.php
  * @uses 		    config.inc.php
  * @uses 		    common.php
@@ -37,7 +37,7 @@ function require_web_editor($editor_type=null)
         $cfg = getWebEditorCfg();
         $webEditorType = $cfg['type'];
 	}
-	  
+
 	switch($webEditorType)
     {
     	case 'fckeditor':
@@ -47,15 +47,19 @@ function require_web_editor($editor_type=null)
 		case 'ckeditor':
     		return "../../third_party/ckeditor/ckeditor.class.php";
     		break;
-   
-    	case 'tinymce':
-    		return "tinymce.class.php";
-    		break;
 
-    	case 'none':
-    	default:
-    		return "no_editor.class.php";
-    		break;
+    case 'syntax':
+        return "../../third_party/syntaxhighlighter/syntax.class.php"
+        break;
+
+  	case 'tinymce':
+  		return "tinymce.class.php";
+  		break;
+
+  	case 'none':
+  	default:
+  		return "no_editor.class.php";
+  		break;
     }
 }
 
@@ -85,13 +89,13 @@ function web_editor($html_input_id,$base_path,$editor_cfg=null)
 			if (isset($webEditorCfg['width']))
 			{
 				$of->Width = $webEditorCfg['width'];
-			}	
+			}
 		break;
 
 		case 'ckeditor':
 			// CKEditor Language according to chosen Testlink language
 			$locale = (isset($_SESSION['locale'])) ? $_SESSION['locale'] : 'en_GB';
-			
+
 			//$ckeditorLang;
 			switch($locale)
 			{
@@ -114,7 +118,7 @@ function web_editor($html_input_id,$base_path,$editor_cfg=null)
 				case 'zh_CN': $ckeditorLang = 'zh-cn'; break;
 				default: $ckeditorLang = 'en-gb'; break;
 			}
-			
+
 			$of = new ckeditorInterface($html_input_id) ;
 			$of->Editor->basePath = $base_path . 'third_party/ckeditor/';
 			$of->Editor->config['customConfig'] = $base_path . $webEditorCfg['configFile'];
@@ -124,13 +128,13 @@ function web_editor($html_input_id,$base_path,$editor_cfg=null)
 			{
 				$of->Editor->config['height'] = $webEditorCfg['height'];
 			}
-			
+
 			if (isset($webEditorCfg['width']))
 			{
 				$of->Editor->config['width'] = $webEditorCfg['width'];
-			}	
+			}
 		break;
-		    
+
 		case 'tinymce':
 			$of = new tinymce($html_input_id) ;
 			if (isset($webEditorCfg['rows']))
@@ -143,7 +147,20 @@ function web_editor($html_input_id,$base_path,$editor_cfg=null)
 				$of->cols = $webEditorCfg['cols'];
 			}
 			break;
-		    
+
+    case 'syntax':
+			$of = new syntaxHighlighter($html_input_id) ;
+			if (isset($webEditorCfg['rows']))
+			{
+				$of->rows = $webEditorCfg['rows'];
+			}
+
+			if (isset($webEditorCfg['cols']))
+			{
+				$of->cols = $webEditorCfg['cols'];
+			}
+			break;
+
 		case 'none':
 		default:
 			$of = new no_editor($html_input_id) ;
@@ -151,14 +168,14 @@ function web_editor($html_input_id,$base_path,$editor_cfg=null)
 			{
 				$of->rows = $webEditorCfg['rows'];
 			}
-			
+
 			if (isset($webEditorCfg['cols']))
 			{
 				$of->cols = $webEditorCfg['cols'];
-			}	
+			}
 			break;
 	}
-    
+
   return $of;
 }
 ?>

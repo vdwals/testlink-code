@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<title>Hello SyntaxHighlighter</title>
+		<script type="text/javascript" src="scripts/shCore.js"></script>
+		<script type="text/javascript" src="scripts/shBrushJScript.js"></script>
+		<script type="text/javascript" src="scripts/shBrushBash.js"></script>
+		<link type="text/css" rel="stylesheet" href="styles/shCoreDefault.css" />
+		<link type="text/css" rel="stylesheet" href="styles/shCoreEclipse.css" />
+		<script type="text/javascript">
+			SyntaxHighlighter.config.toolbar = false;
+			SyntaxHighlighter.all();
+		</script>
+	</head>
+
+	<body style="background: white; font-family: Helvetica">
+
+		<h1>Hello SyntaxHighlighter</h1>
+		<pre class="brush: bash;">
+	Profile=Default
+ Process=Default
+
+    # Prepare message
+    mkdir "${ProjectDir}/QA/in/"
+    cp "${MsgBaseDir}/test.txt" "${ProjectDir}/QA/in/"
+    chmod a-rw "${ProjectDir}/QA/in/test.txt"
+
+    # Run project
+    startFlow -test-name=$TestName -project=$Project -flow="${Flow}#1" -log=$ProjectDir -wait-for-eot=10
+
+    # Check result
+    local result=$(cat "${FlowLog}" | grep Error)
+
+    if [[ $result == *"has a data consistency error"* ]]
+       then
+          LogError "${TestName}: General error message created: ${result}"
+          return
+    fi
+    LogSuccess "${TestName}"
+    return 0
+</pre>
+
+</html>
