@@ -35,7 +35,7 @@
             'sleep sort source split ssh strace su sudo sum symlink sync tail tar tee test time ' +
             'times touch top traceroute trap tr true tsort tty type ulimit umask umount unalias ' +
             'uname unexpand uniq units unset unshar useradd usermod users uuencode uudecode v vdir ' +
-            'vi watch wc whereis which who whoami Wget xargs yes';
+            'vi watch wc whereis which who whoami Wget xargs yes LogSuccess LogError startFlow';
 
         this.regexList = [
             { regex: /^#!.*$/gm, css: 'preprocessor bold' },
@@ -45,7 +45,7 @@
             { regex: SyntaxHighlighter.regexLib.singleQuotedString, css: 'string' }, // single quoted strings
             { regex: new RegExp(this.getKeywords(keywords), 'gm'), css: 'keyword' }, // keywords
             { regex: new RegExp(this.getKeywords(commands), 'gm'), css: 'functions' }, // commands
-            { regex: new RegExp('(\\$|@|%)\\w+', 'g'), css: 'variable' },
+            { regex: new RegExp('\\$(\\{)?\\w+(\\})?', 'g'), css: 'variable' },
         ];
     }
 

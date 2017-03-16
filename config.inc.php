@@ -47,7 +47,7 @@ $tlCfg->exec_cfg->exec_mode = new stdClass();
 // code int value > latest standard execution code defined.
 // lblkey => key to be used on lang_get() call.
 //
-$tlCfg->custom_execution_types = null;
+$tlCfg->custom_execution_types = array(3 => 'noxa', 4 => 'withxa');
 
 $tlCfg->gui = new stdClass();
 $tlCfg->gui->custom_fields = new stdClass();
