@@ -48,8 +48,8 @@ function require_web_editor($editor_type=null)
     		return "../../third_party/ckeditor/ckeditor.class.php";
     		break;
 
-    case 'syntax':
-        return "../../third_party/syntaxhighlighter/syntax.class.php"
+    case 'mirror':
+        return "../../third_party/codeMirror/codemirror.class.php";
         break;
 
   	case 'tinymce':
@@ -148,8 +148,9 @@ function web_editor($html_input_id,$base_path,$editor_cfg=null)
 			}
 			break;
 
-    case 'syntax':
-			$of = new syntaxHighlighter($html_input_id) ;
+    case 'mirror':
+			$of = new codemirror($html_input_id) ;
+      $of->init();
 			if (isset($webEditorCfg['rows']))
 			{
 				$of->rows = $webEditorCfg['rows'];
